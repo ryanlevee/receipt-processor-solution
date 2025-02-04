@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from typing import Dict, List
 
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError
 
@@ -26,12 +26,6 @@ class ReceiptStore:
 
     def get_points(self, receipt_id: str) -> int:
         return self.receipts.get(receipt_id)
-
-
-def get_receipt_store():
-    if not hasattr(app.state, "receipt_store"):
-        app.state.receipt_store = ReceiptStore()
-    return app.state.receipt_store
 
 
 class Item(BaseModel):
@@ -113,16 +107,25 @@ def calc_points(receipt: Receipt) -> int:
 
     return points
 
+# Middleware to attach ReceiptStore to request state
+
+
+@app.middleware("http")
+async def add_receipt_store_to_request(request: Request, call_next):
+    if not hasattr(request.state, "receipt_store"):
+        request.state.receipt_store = ReceiptStore()
+    response = await call_next(request)
+    return response
+
 
 @app.post("/receipts/process")
 async def process_receipt(
     receipt: Receipt,
-    store: ReceiptStore = Depends(get_receipt_store),
 ):
     logger.info("Processing receipt: %s", receipt.model_dump_json())
     receipt_id: str = str(uuid.uuid4())
     points: int = calc_points(receipt)
-    store.add_receipt(receipt_id, points)
+    app.state.receipt_store.add_receipt(receipt_id, points)
     logger.info(
         "Receipt processed with ID: %s and points: %d", receipt_id, points
     )
@@ -133,10 +136,9 @@ async def process_receipt(
 @app.get("/receipts/{id}/points")
 async def get_points(
     id: str,
-    store: ReceiptStore = Depends(get_receipt_store)
 ):
     logger.info("Fetching points for receipt ID: %s", id)
-    points: int = store.get_points(id)
+    points: int = app.state.receipt_store.get_points(id)
     if points is not None:
         logger.info("Points for receipt ID %s: %d", id, points)
         return {"points": points}
