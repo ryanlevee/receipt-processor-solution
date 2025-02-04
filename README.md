@@ -112,7 +112,7 @@ Make sure you are in the root directory for the project (`receipt-processor`).
 
 ### Run a container using the image
 
-    docker run -d --name receipt-processor-container -p 8000:8000 receipt-processor-image:1.0
+    docker run -d --name receipt-processor -p 8000:8000 receipt-processor-image:1.0
     
 
 ### Verify the container is running
@@ -122,7 +122,7 @@ Make sure you are in the root directory for the project (`receipt-processor`).
 
 ### Verify the web service has started
 
-    docker logs receipt-processor-container
+    docker logs receipt-processor
     
 
 API documentation can now be accessed at `http://localhost:8000/docs`.
