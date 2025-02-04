@@ -7,6 +7,7 @@ from typing import Dict, List
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError
+from dataclasses import dataclass, field
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,16 +18,14 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 
+@dataclass
 class ReceiptStore:
-    def __init__(self):
-        self.receipts: Dict[str, int] = {}
+    receipts: Dict[str, int] = field(default_factory=lambda: {})
 
     def add_receipt(self, receipt_id: str, points: int):
-        print(self.receipts)
         self.receipts[receipt_id] = points
 
     def get_points(self, receipt_id: str) -> int:
-        print(self.receipts)
         return self.receipts.get(receipt_id)
 
 
