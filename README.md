@@ -8,17 +8,13 @@ This project implements a web service for processing receipts and calculating po
 
 The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, efficient request handling, and comprehensive testing.
 
-## Challenge Requirements Met
+## Key Features
 
 - **Efficient Request Handling**: Utilizes FastAPI's async capabilities for efficient request handling.
 - **In-Memory Storage**: Stores receipt data in memory, ensuring no data persistence across application restarts.
 - **Comprehensive Testing**: Includes both unit and integration tests to ensure the correctness of the implementation.
 - **Dockerized Setup**: Provides a Dockerfile for easy containerization and deployment.
-
-## Unique Implementation Details
-
-- **Custom Middleware**: Uses custom middleware to attach a `ReceiptStore` instance to the state, ensuring the same instance is used across all requests without using global variables.
-- **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
+- **Exception Handlers**: Provides exception handler examples for `ValidationError` and `HTTPException` to return meaningful error responses.
 
 API Endpoints
 -------------
@@ -97,38 +93,30 @@ Make sure you are in the root directory for the project (`receipt-processor`).
 ### Build Docker image
 
     docker build -t receipt-processor-image:1.0 .
-    
 
 ### Verify Docker image was successfully built
 
     docker images
     
-
 ### Run a container using the image
 
     docker run -d --name receipt-processor -p 8000:8000 receipt-processor-image:1.0
-    
 
 ### Verify the container is running
 
     docker ps
     
-
 ### Verify the web service has started
 
     docker logs receipt-processor
     
-
 API documentation and UI can now be accessed at `http://localhost:8000/docs`.
-
 
 ### Running Tests
 
 1.  Run the tests using pytest:
     
         pytest
-        
-    
 
 Project Structure
 -----------------
@@ -152,11 +140,9 @@ Running the Application Locally
         git clone https://github.com/ryanlevee/receipt-processor.git
         cd receipt-processor
         
-    
 2.  Install dependencies:
     
         pip install -r requirements.txt
-        
     
 3.  Run the application:
     
