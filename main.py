@@ -109,7 +109,6 @@ def calc_points(receipt: Receipt) -> int:
     return points
 
 
-
 @app.post("/receipts/process")
 async def process_receipt(
     receipt: Receipt,
