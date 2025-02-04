@@ -4,4 +4,3 @@ httpx
 pydantic
 pytest
 pytest-asyncio
-gunicorn
