@@ -125,21 +125,8 @@ Make sure you are in the root directory for the project (`receipt-processor`).
     docker logs receipt-processor-container
     
 
-API documentation can be accessed at `http://localhost:8000/docs`.
+API documentation can now be accessed at `http://localhost:8000/docs`.
 
-    
-### Using Docker
-
-1.  Build the Docker image:
-    
-        docker build -t receipt-processor .
-        
-    
-2.  Run the Docker container:
-    
-        docker run -p 8000:8000 receipt-processor
-        
-    
 
 ### Running Tests
 
