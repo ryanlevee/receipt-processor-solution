@@ -4,7 +4,7 @@ Receipt Processor
 Overview
 --------
 
-This project implements a web service for processing receipts and calculating points based on the specific ruleset from the Fetch Rewards Receipt Processor Challenge. The challenge requirements can be found here:
+This project implements a web service for processing receipts and calculating points based on a specific ruleset from the Fetch Rewards Receipt Processor Challenge. The challenge requirements can be found here:
 
 https://github.com/fetch-rewards/receipt-processor-challenge
 
