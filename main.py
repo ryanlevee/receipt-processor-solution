@@ -108,9 +108,8 @@ def calc_points(receipt: Receipt) -> int:
     return points
 
 
-# Middleware to attach ReceiptStore to request state
 @app.middleware("http")
-async def create_receipt_store(request: Request, call_next):
+async def add_receipt_store_to_app(request: Request, call_next):
     if not hasattr(app.state, "receipt_store"):
         app.state.receipt_store = ReceiptStore()
     response = await call_next(app)
@@ -120,6 +119,7 @@ async def create_receipt_store(request: Request, call_next):
 @app.post("/receipts/process")
 async def process_receipt(
     receipt: Receipt,
+    request: Request
 ):
     logger.info("Processing receipt: %s", receipt.model_dump_json())
     receipt_id: str = str(uuid.uuid4())
@@ -135,6 +135,7 @@ async def process_receipt(
 @app.get("/receipts/{id}/points")
 async def get_points(
     id: str,
+    request: Request
 ):
     logger.info("Fetching points for receipt ID: %s", id)
     points: int = app.state.receipt_store.get_points(id)
