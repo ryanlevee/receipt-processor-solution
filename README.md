@@ -4,9 +4,13 @@ Receipt Processor
 Overview
 --------
 
-This project implements a web service for processing receipts and calculating points based on specific rules. The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, asynchronous operations, and comprehensive testing.
+This project implements a web service for processing receipts and calculating points based on a specific ruleset from the Fetch Rewards Receipt Processor Challenge. The challenge requirements can be found here:
 
-Features
+https://github.com/fetch-rewards/receipt-processor-challenge
+
+The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, asynchronous operations, and comprehensive testing.
+
+Challenge Requirements Met
 --------
 
 *   **Asynchronous Operations**: Utilizes FastAPI's async capabilities for efficient request handling.
@@ -15,10 +19,18 @@ Features
 *   **Comprehensive Testing**: Includes both unit and integration tests to ensure the correctness of the implementation.
 *   **Dockerized Setup**: Provides a Dockerfile for easy containerization and deployment.
 
+Unique Implementation Details
+-----------------------------
+
+*   **Async Database Operations**: The `ReceiptStore` class uses async methods for adding and retrieving receipts.
+*   **Async HTTP Requests**: Utilizes `httpx.AsyncClient` for making asynchronous HTTP requests in background tasks.
+*   **Background Tasks**: Implements background tasks using FastAPI's `BackgroundTasks` to log receipt processing asynchronously.
+*   **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
+
 API Endpoints
 -------------
 
-### Process Receipts
+### 1.  Process Receipts
 
 *   **Endpoint**: `/receipts/process`
 *   **Method**: `POST`
@@ -51,7 +63,7 @@ API Endpoints
     }
     
 
-### Get Points
+### 2.  Get Points
 
 *   **Endpoint**: `/receipts/{id}/points`
 *   **Method**: `GET`
@@ -76,29 +88,45 @@ Points Calculation Rules
 6.  6 points if the day in the purchase date is odd.
 7.  10 points if the time of purchase is after 2:00pm and before 4:00pm.
 
-Unique Implementation Details
------------------------------
-
-*   **Async Database Operations**: The `ReceiptStore` class uses async methods for adding and retrieving receipts.
-*   **Async HTTP Requests**: Utilizes `httpx.AsyncClient` for making asynchronous HTTP requests in background tasks.
-*   **Background Tasks**: Implements background tasks using FastAPI's `BackgroundTasks` to log receipt processing asynchronously.
-*   **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
-
 Running the Application
 -----------------------
+Installation
+------------
 
-### Using Docker
+### Clone the repository
 
-1.  Build the Docker image:
+    git clone https://github.com/ryanlevee/receipt-processor.git
     
-        docker build -t receipt-processor .
-        
+
+Make sure you are in the root directory for the project (`receipt-processor`).
+
+### Build Docker image
+
+    docker build -t receipt-processor-image:1.0 .
     
-2.  Run the Docker container:
+
+### Verify Docker image was successfully built
+
+    docker images
     
-        docker run -p 8000:8000 receipt-processor
-        
+
+### Run a container using the image
+
+    docker run -d --name receipt-processor -p 8000:8000 receipt-processor-image:1.0
     
+
+### Verify the container is running
+
+    docker ps
+    
+
+### Verify the web service has started
+
+    docker logs receipt-processor
+    
+
+API documentation can now be accessed at `http://localhost:8000/docs`.
+
 
 ### Running Tests
 
