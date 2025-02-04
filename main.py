@@ -7,7 +7,6 @@ from typing import Dict, List
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError
-from dataclasses import dataclass, field
 
 logging.basicConfig(
     level=logging.INFO,
@@ -18,15 +17,16 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 
-@dataclass
 class ReceiptStore:
-    receipts: Dict[str, int] = field(default_factory=lambda: {})
+    receipts: Dict[str, int] = {}
 
-    def add_receipt(self, receipt_id: str, points: int):
-        self.receipts[receipt_id] = points
+    @staticmethod
+    def add_receipt(receipt_id: str, points: int):
+        ReceiptStore.receipts[receipt_id] = points
 
-    def get_points(self, receipt_id: str) -> int:
-        return self.receipts.get(receipt_id)
+    @staticmethod
+    def get_points(receipt_id: str) -> int:
+        return ReceiptStore.receipts.get(receipt_id)
 
 
 class Item(BaseModel):
@@ -109,13 +109,6 @@ def calc_points(receipt: Receipt) -> int:
     return points
 
 
-@app.middleware("http")
-async def add_receipt_store_to_app(request: Request, call_next):
-    if not hasattr(app.state, "receipt_store"):
-        app.state.receipt_store = ReceiptStore()
-    response = await call_next(app)
-    return response
-
 
 @app.post("/receipts/process")
 async def process_receipt(
@@ -125,7 +118,7 @@ async def process_receipt(
     logger.info("Processing receipt: %s", receipt.model_dump_json())
     receipt_id: str = str(uuid.uuid4())
     points: int = calc_points(receipt)
-    app.state.receipt_store.add_receipt(receipt_id, points)
+    ReceiptStore.add_receipt(receipt_id, points)
     logger.info(
         "Receipt processed with ID: %s and points: %d", receipt_id, points
     )
@@ -139,7 +132,7 @@ async def get_points(
     request: Request
 ):
     logger.info("Fetching points for receipt ID: %s", id)
-    points: int = app.state.receipt_store.get_points(id)
+    points: int = ReceiptStore.get_points(id)
     if points is not None:
         logger.info("Points for receipt ID %s: %d", id, points)
         return {"points": points}
