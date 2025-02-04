@@ -89,7 +89,7 @@ Points Calculation Rules
 6.  6 points if the day in the purchase date is odd.
 7.  10 points if the time of purchase is after 2:00pm and before 4:00pm.
 
-Running the Application
+Running the Application via Docker
 -----------------------
 Installation
 ------------
@@ -151,7 +151,7 @@ Project Structure
     └── README.md              # Project documentation
     
 
-Instructions for Running the Application
+Running the Application Locally
 ----------------------------------------
 
 1.  Clone the repository:
