@@ -22,9 +22,11 @@ class ReceiptStore:
         self.receipts: Dict[str, int] = {}
 
     def add_receipt(self, receipt_id: str, points: int):
+        print(self.receipts)
         self.receipts[receipt_id] = points
 
     def get_points(self, receipt_id: str) -> int:
+        print(self.receipts)
         return self.receipts.get(receipt_id)
 
 
