@@ -6,7 +6,7 @@ Overview
 
 This project implements a web service for processing receipts and calculating points based on a specific ruleset from the Fetch Rewards Receipt Processor Challenge. The challenge requirements can be found here:
 
-*   https://github.com/fetch-rewards/receipt-processor-challenge
+https://github.com/fetch-rewards/receipt-processor-challenge
 
 The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, asynchronous operations, and comprehensive testing.
 
@@ -90,7 +90,44 @@ Points Calculation Rules
 
 Running the Application
 -----------------------
+Installation
+------------
 
+### Clone the repository
+
+    git clone https://github.com/ryanlevee/receipt-processor.git
+    
+
+Make sure you are in the root directory for the project (`receipt-processor`).
+
+### Build Docker image
+
+    docker build -t receipt-processor-image:1.0 .
+    
+
+### Verify Docker image was successfully built
+
+    docker images
+    
+
+### Run a container using the image
+
+    docker run -d --name receipt-processor-container -p 8000:8000 receipt-processor-image:1.0
+    
+
+### Verify the container is running
+
+    docker ps
+    
+
+### Verify the web service has started
+
+    docker logs receipt-processor-container
+    
+
+API documentation can be accessed at `http://localhost:8000/docs`.
+
+    
 ### Using Docker
 
 1.  Build the Docker image:
