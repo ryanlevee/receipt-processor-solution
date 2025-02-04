@@ -21,10 +21,10 @@ class ReceiptStore:
     def __init__(self):
         self.receipts: Dict[str, int] = {}
 
-    async def add_receipt(self, receipt_id: str, points: int):
+    def add_receipt(self, receipt_id: str, points: int):
         self.receipts[receipt_id] = points
 
-    async def get_points(self, receipt_id: str) -> int:
+    def get_points(self, receipt_id: str) -> int:
         return self.receipts.get(receipt_id)
 
 
