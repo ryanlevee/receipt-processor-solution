@@ -4,7 +4,11 @@ Receipt Processor
 Overview
 --------
 
-This project implements a web service for processing receipts and calculating points based on the specific ruleset from the Fetch Rewards Receipt Processor Challenge (https://github.com/fetch-rewards/receipt-processor-challenge). The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, asynchronous operations, and comprehensive testing.
+This project implements a web service for processing receipts and calculating points based on the specific ruleset from the Fetch Rewards Receipt Processor Challenge. The challenge requirements can be found here:
+
+https://github.com/fetch-rewards/receipt-processor-challenge
+
+The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, asynchronous operations, and comprehensive testing.
 
 Challenge Requirements Met
 --------
