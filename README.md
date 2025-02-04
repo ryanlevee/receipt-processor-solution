@@ -29,8 +29,8 @@ Unique Implementation Details
 
 API Endpoints
 -------------
-*   Process Receipts
-*   Get Points
+1.  Process Receipts
+2.  Get Points
 
 ### Process Receipts
 
