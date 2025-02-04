@@ -124,7 +124,7 @@ async def process_receipt(
     logger.info("Processing receipt: %s", receipt.model_dump_json())
     receipt_id: str = str(uuid.uuid4())
     points: int = calc_points(receipt)
-    await store.add_receipt(receipt_id, points)
+    store.add_receipt(receipt_id, points)
     logger.info(
         "Receipt processed with ID: %s and points: %d", receipt_id, points
     )
@@ -135,11 +135,11 @@ async def process_receipt(
 
 
 async def log_receipt_processing(receipt_id: str, points: int):
-    # async with httpx.AsyncClient() as client:
-        # await client.post(
-        #     "http://example.com/log", json={"id": receipt_id, "points": points}
-        # )
-    logger.info({"id": receipt_id, "points": points})  # log_receipt_processing PLACEHOLDER
+    async with httpx.AsyncClient() as client:
+        await client.post(
+            "http://localhost:8000/log", json={"id": receipt_id, "points": points}
+        )
+    # logger.info({"id": receipt_id, "points": points})  # log_receipt_processing placeholder
 
 
 @app.get("/receipts/{id}/points")
@@ -147,7 +147,7 @@ async def get_points(
     id: str, store: ReceiptStore = Depends(get_receipt_store)
 ):
     logger.info("Fetching points for receipt ID: %s", id)
-    points: int = await store.get_points(id)
+    points: int = store.get_points(id)
     if points is not None:
         logger.info("Points for receipt ID %s: %d", id, points)
         return {"points": points}
