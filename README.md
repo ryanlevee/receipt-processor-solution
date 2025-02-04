@@ -29,10 +29,8 @@ Unique Implementation Details
 
 API Endpoints
 -------------
-1.  Process Receipts
-2.  Get Points
 
-### Process Receipts
+### 1.  Process Receipts
 
 *   **Endpoint**: `/receipts/process`
 *   **Method**: `POST`
@@ -65,7 +63,7 @@ API Endpoints
     }
     
 
-### Get Points
+### 2.  Get Points
 
 *   **Endpoint**: `/receipts/{id}/points`
 *   **Method**: `GET`
