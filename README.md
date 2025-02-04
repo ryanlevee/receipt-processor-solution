@@ -4,28 +4,22 @@ Receipt Processor
 Overview
 --------
 
-This project implements a web service for processing receipts and calculating points based on a specific ruleset from the Fetch Rewards Receipt Processor Challenge. The challenge requirements can be found here:
+This project implements a web service for processing receipts and calculating points based on a specific ruleset from the [Fetch Rewards Receipt Processor Challenge](https://github.com/fetch-rewards/receipt-processor-challenge).
 
-https://github.com/fetch-rewards/receipt-processor-challenge
+The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, efficient request handling, and comprehensive testing.
 
-The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, asynchronous operations, and comprehensive testing.
+## Challenge Requirements Met
 
-Challenge Requirements Met
---------
+- **Efficient Request Handling**: Utilizes FastAPI's async capabilities for efficient request handling.
+- **In-Memory Storage**: Stores receipt data in memory, ensuring no data persistence across application restarts.
+- **Comprehensive Testing**: Includes both unit and integration tests to ensure the correctness of the implementation.
+- **Dockerized Setup**: Provides a Dockerfile for easy containerization and deployment.
 
-*   **Asynchronous Operations**: Utilizes FastAPI's async capabilities for efficient request handling.
-*   **In-Memory Storage**: Stores receipt data in memory, ensuring no data persistence across application restarts.
-*   **Background Tasks**: Implements background tasks for logging receipt processing asynchronously.
-*   **Comprehensive Testing**: Includes both unit and integration tests to ensure the correctness of the implementation.
-*   **Dockerized Setup**: Provides a Dockerfile for easy containerization and deployment.
+## Unique Implementation Details
 
-Unique Implementation Details
------------------------------
-
-*   **Async Database Operations**: The `ReceiptStore` class uses async methods for adding and retrieving receipts.
-*   **Async HTTP Requests**: Utilizes `httpx.AsyncClient` for making asynchronous HTTP requests in background tasks.
-*   **Background Tasks**: Implements background tasks using FastAPI's `BackgroundTasks` to log receipt processing asynchronously.
-*   **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
+- **Singleton Pattern for ReceiptStore**: Ensures the same instance of `ReceiptStore` is used across all requests without using global variables.
+- **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
+- **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
 
 API Endpoints
 -------------
