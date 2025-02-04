@@ -54,14 +54,12 @@ API Endpoints
       ],
       "total": "35.35"
     }
-    
 
 #### Example Response
 
     {
       "id": "7fb1377b-b223-49d9-a31a-5a02701dd310"
     }
-    
 
 ### 2.  Get Points
 
@@ -70,12 +68,15 @@ API Endpoints
 *   **Description**: Retrieves the points awarded for the receipt with the given ID.
 *   **Response**: JSON object containing the number of points awarded.
 
+#### Example Request
+
+    GET /receipts/7fb1377b-b223-49d9-a31a-5a02701dd310/points
+
 #### Example Response
 
     {
       "points": 28
     }
-    
 
 Points Calculation Rules
 ------------------------
