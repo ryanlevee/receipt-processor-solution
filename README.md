@@ -120,7 +120,7 @@ Make sure you are in the root directory for the project (`receipt-processor`).
     docker logs receipt-processor
     
 
-API documentation can now be accessed at `http://localhost:8000/docs`.
+API documentation and UI can now be accessed at `http://localhost:8000/docs`.
 
 
 ### Running Tests
@@ -164,5 +164,6 @@ Running the Application Locally
         uvicorn main:app --host 0.0.0.0 --port 8000
         
     
-4.  Access the API documentation at `http://localhost:8000/docs`.
+4.  Access the API documentation and UI at `http://localhost:8000/docs`.
+
     
