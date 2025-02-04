@@ -17,8 +17,7 @@ The service is built using FastAPI and includes endpoints for submitting receipt
 
 ## Unique Implementation Details
 
-- **Singleton Pattern for ReceiptStore**: Ensures the same instance of `ReceiptStore` is used across all requests without using global variables.
-- **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
+- **Custom Middleware**: Uses custom middleware to attach a `ReceiptStore` instance to the state, ensuring the same instance is used across all requests without using global variables.
 - **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
 
 API Endpoints
