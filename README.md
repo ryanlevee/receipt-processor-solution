@@ -17,8 +17,7 @@ The service is built using FastAPI and includes endpoints for submitting receipt
 
 ## Unique Implementation Details
 
-- **Singleton Pattern for ReceiptStore**: Ensures the same instance of `ReceiptStore` is used across all requests without using global variables.
-- **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
+- **Custom Middleware**: Uses custom middleware to attach a `ReceiptStore` instance to the state, ensuring the same instance is used across all requests without using global variables.
 - **Custom Exception Handlers**: Provides custom exception handlers for `ValidationError` and `HTTPException` to return meaningful error responses.
 
 API Endpoints
@@ -120,7 +119,7 @@ Make sure you are in the root directory for the project (`receipt-processor`).
     docker logs receipt-processor
     
 
-API documentation can now be accessed at `http://localhost:8000/docs`.
+API documentation and UI can now be accessed at `http://localhost:8000/docs`.
 
 
 ### Running Tests
@@ -150,7 +149,7 @@ Running the Application Locally
 
 1.  Clone the repository:
     
-        git clone <repository-url>
+        git clone https://github.com/ryanlevee/receipt-processor.git
         cd receipt-processor
         
     
@@ -164,5 +163,6 @@ Running the Application Locally
         uvicorn main:app --host 0.0.0.0 --port 8000
         
     
-4.  Access the API documentation at `http://localhost:8000/docs`.
+4.  Access the API documentation and UI at `http://localhost:8000/docs`.
+
     
