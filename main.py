@@ -135,10 +135,11 @@ async def process_receipt(
 
 
 async def log_receipt_processing(receipt_id: str, points: int):
-    async with httpx.AsyncClient() as client:
-        await client.post(
-            "http://example.com/log", json={"id": receipt_id, "points": points}
-        )
+    # async with httpx.AsyncClient() as client:
+        # await client.post(
+        #     "http://example.com/log", json={"id": receipt_id, "points": points}
+        # )
+    logger.info({"id": receipt_id, "points": points})  # log_receipt_processing PLACEHOLDER
 
 
 @app.get("/receipts/{id}/points")
