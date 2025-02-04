@@ -3,10 +3,10 @@ import math
 import uuid
 from datetime import datetime
 from typing import Dict, List
-from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request
+
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError
-import httpx
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,11 +28,10 @@ class ReceiptStore:
         return self.receipts.get(receipt_id)
 
 
-receipt_store = ReceiptStore()
-
-
 def get_receipt_store():
-    return receipt_store
+    if not hasattr(app.state, "receipt_store"):
+        app.state.receipt_store = ReceiptStore()
+    return app.state.receipt_store
 
 
 class Item(BaseModel):
@@ -117,7 +116,6 @@ def calc_points(receipt: Receipt) -> int:
 
 @app.post("/receipts/process")
 async def process_receipt(
-    background_tasks: BackgroundTasks,
     receipt: Receipt,
     store: ReceiptStore = Depends(get_receipt_store),
 ):
@@ -129,22 +127,13 @@ async def process_receipt(
         "Receipt processed with ID: %s and points: %d", receipt_id, points
     )
 
-    background_tasks.add_task(log_receipt_processing, receipt_id, points)
-
     return {"id": receipt_id}
-
-
-async def log_receipt_processing(receipt_id: str, points: int):
-    async with httpx.AsyncClient() as client:
-        await client.post(
-            "http://localhost:8000/log", json={"id": receipt_id, "points": points}
-        )
-    # logger.info({"id": receipt_id, "points": points})  # log_receipt_processing placeholder
 
 
 @app.get("/receipts/{id}/points")
 async def get_points(
-    id: str, store: ReceiptStore = Depends(get_receipt_store)
+    id: str,
+    store: ReceiptStore = Depends(get_receipt_store)
 ):
     logger.info("Fetching points for receipt ID: %s", id)
     points: int = store.get_points(id)
