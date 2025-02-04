@@ -29,7 +29,6 @@ API Endpoints
 
 #### Example Request
 
-    json
     {
       "retailer": "Target",
       "purchaseDate": "2022-01-01",
