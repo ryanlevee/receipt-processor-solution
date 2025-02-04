@@ -8,7 +8,7 @@ This project implements a web service for processing receipts and calculating po
 
 The service is built using FastAPI and includes endpoints for submitting receipts and retrieving points awarded for a given receipt ID. The project is designed to fulfill the requirements of a coding challenge, with a focus on in-memory data storage, efficient request handling, and comprehensive testing.
 
-## Key Features
+## Key Features and Challenge Requirements
 
 - **Efficient Request Handling**: Utilizes FastAPI's async capabilities for efficient request handling.
 - **In-Memory Storage**: Stores receipt data in memory, ensuring no data persistence across application restarts.
